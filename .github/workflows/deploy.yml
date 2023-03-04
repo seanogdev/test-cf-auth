@@ -24,7 +24,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Publish to Pages
-        uses: cloudflare/pages-action@v1.1.0
+        uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
