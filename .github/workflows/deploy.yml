@@ -23,6 +23,13 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: 'pnpm'
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Docs Site
+        run: pnpm docs:build
+
+
       - name: Publish to Pages
         uses: cloudflare/pages-action@v1
         with:
