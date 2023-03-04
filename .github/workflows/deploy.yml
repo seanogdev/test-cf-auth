@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          registry-url: https://registry.npmjs.org
+          node-version: 18
           cache: 'pnpm'
 
       - name: Install dependencies
@@ -28,7 +28,6 @@ jobs:
 
       - name: Build Docs Site
         run: pnpm docs:build
-
 
       - name: Publish to Pages
         uses: cloudflare/pages-action@v1
