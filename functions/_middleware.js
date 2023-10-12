@@ -17,6 +17,7 @@ function getAuthConfig(env) {
         clientSecret: env.TEAMWORK_SECRET,
       }),
     ],
+    secret: env.AUTH_SECRET,
     trustHost: true,
     session: {
       strategy: 'jwt',
