@@ -1,13 +1,15 @@
 import CFPagesAuth from '@kjartanm/cf-pages-authjs';
 import { TeamworkProvider } from './teamworkProvider';
 
-const { authPlugin } = CFPagesAuth({
-  providers: [
-    TeamworkProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-  ],
+const { authPlugin, setSession } = CFPagesAuth((env) => {
+  return {
+    providers: [
+      TeamworkProvider({
+        clientId: env.TEAMWORK_ID,
+        clientSecret: env.TEAMWORK_SECRET,
+      }),
+    ],
+  };
 });
 
-export const onRequest = [authPlugin];
+export const onRequest = [authPlugin, setSession];
