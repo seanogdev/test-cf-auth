@@ -16,6 +16,7 @@
     "vue": "^3.3.4"
   },
   "dependencies": {
-    "@auth/core": "^0.16.1"
+    "@auth/core": "^0.16.1",
+    "@kjartanm/cf-pages-authjs": "^0.0.5"
   }
 }

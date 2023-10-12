@@ -8,6 +8,9 @@ dependencies:
   '@auth/core':
     specifier: ^0.16.1
     version: 0.16.1
+  '@kjartanm/cf-pages-authjs':
+    specifier: ^0.0.5
+    version: 0.0.5
 
 devDependencies:
   vitepress:
@@ -440,6 +443,10 @@ packages:
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: true
+
+  /@kjartanm/cf-pages-authjs@0.0.5:
+    resolution: {integrity: sha512-NRvm8xVdm+gcxmKa3enIz+A0ne9+QSBKxvZNN0avOdYctYg/7O7l8zW9WrDXIykUq5cS18fiAWXRIkERRa6cKQ==}
+    dev: false
 
   /@panva/hkdf@1.1.1:
     resolution: {integrity: sha512-dhPeilub1NuIG0X5Kvhh9lH4iW3ZsHlnzwgwbOlgwQ2wG1IqFzsgHqmKPk3WzsdWAeaxKJxgM0+W433RmN45GA==}
