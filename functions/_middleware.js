@@ -1,7 +1,7 @@
 import CFPagesAuth from '@kjartanm/cf-pages-authjs';
 import { TeamworkProvider } from './teamworkProvider';
 
-const { authPlugin, setSession } = CFPagesAuth((env) => {
+const { authPlugin } = CFPagesAuth((env) => {
   return {
     providers: [
       TeamworkProvider({
@@ -12,4 +12,4 @@ const { authPlugin, setSession } = CFPagesAuth((env) => {
   };
 });
 
-export const onRequest = [authPlugin, setSession];
+export const onRequest = [authPlugin];
