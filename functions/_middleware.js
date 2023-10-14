@@ -1,6 +1,13 @@
 import CFPagesAuth from '@kjartanm/cf-pages-authjs';
 import { TeamworkProvider } from './teamworkProvider';
-// import { Github } from '@auth/core/providers/github';
+import Github from '@auth/core/providers/github';
+
+export const REDIRECT_LOGIN_RESPONSE = new Response(null, {
+  status: 302,
+  headers: {
+    Location: '/auth',
+  },
+});
 
 function getAuthConfig(env) {
   /**
@@ -8,10 +15,10 @@ function getAuthConfig(env) {
    */
   return {
     providers: [
-      // Github({
-      //   clientId: env.GITHUB_ID,
-      //   clientSecret: env.GITHUB_SECRET,
-      // }),
+      Github({
+        clientId: env.GITHUB_ID,
+        clientSecret: env.GITHUB_SECRET,
+      }),
       TeamworkProvider({
         clientId: env.TEAMWORK_ID,
         clientSecret: env.TEAMWORK_SECRET,
@@ -39,18 +46,17 @@ function getAuthConfig(env) {
   };
 }
 
-const { authPlugin, setSession, createLoginMiddleware } =
-  CFPagesAuth(getAuthConfig);
+const pagesAuth = CFPagesAuth(getAuthConfig);
 
-const addLoginComponent = createLoginMiddleware(
-  ({ env }) => {
-    return `<div class="cf-pages-authjs-login-link"><a href="/auth/signin?callbackUrl=${env.CALLBACK_URL}">Logg inn</a></div>`;
-  },
-  ({ data }) => {
-    return `
-        <div>${data.session.user.email}</div>
-        <div class="cf-pages-authjs-login-link"><a href="/auth/signout?callbackUrl=/test2">Logg ut</a></div>`;
-  },
-);
+/**
+ * @param {import('@cloudflare/workers-types').EventContext} [context]
+ */
+async function handleRequest(context) {
+  return REDIRECT_LOGIN_RESPONSE;
+}
 
-export const onRequest = [authPlugin, setSession, addLoginComponent];
+export const onRequest = [
+  pagesAuth.authPlugin,
+  pagesAuth.setSession,
+  handleRequest,
+];
