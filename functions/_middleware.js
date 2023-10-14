@@ -2,13 +2,6 @@ import CFPagesAuth from '@kjartanm/cf-pages-authjs';
 import { TeamworkProvider } from './teamworkProvider';
 import Github from '@auth/core/providers/github';
 
-export const REDIRECT_LOGIN_RESPONSE = new Response(null, {
-  status: 302,
-  headers: {
-    Location: '/auth/signin',
-  },
-});
-
 function getAuthConfig(env) {
   /**
    * @type {import('@auth/core').AuthConfig} auth
@@ -52,11 +45,18 @@ const pagesAuth = CFPagesAuth(getAuthConfig);
  * @param {import('@cloudflare/workers-types').EventContext} [context]
  */
 async function handleRequest(context) {
-  return REDIRECT_LOGIN_RESPONSE;
+  console.log('context:', context);
+  if (!context.request.url.includes('/auth')) {
+    return Response.redirect(
+      new URL(context.request.url).origin + '/auth/signin',
+      301,
+    );
+  }
+  return context.next();
 }
 
 export const onRequest = [
   pagesAuth.authPlugin,
-  pagesAuth.setSession,
   handleRequest,
+  pagesAuth.setSession,
 ];
