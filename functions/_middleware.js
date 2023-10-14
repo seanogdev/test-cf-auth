@@ -55,8 +55,4 @@ async function handleRequest(context) {
   return context.next();
 }
 
-export const onRequest = [
-  pagesAuth.authPlugin,
-  handleRequest,
-  pagesAuth.setSession,
-];
+export const onRequest = [handleRequest, pagesAuth.authPlugin];
