@@ -5,7 +5,7 @@ import Github from '@auth/core/providers/github';
 export const REDIRECT_LOGIN_RESPONSE = new Response(null, {
   status: 302,
   headers: {
-    Location: '/auth',
+    Location: '/auth/signin',
   },
 });
 
