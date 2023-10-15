@@ -1,5 +1,5 @@
 import { Auth } from '@auth/core';
-import { TeamworkProvider } from './teamworkProvider';
+import TeamworkProvider from './auth-providers/teamwork';
 
 /** @return {import('@auth/core').AuthConfig} */
 async function getAuthConfig(context) {

@@ -1,4 +1,10 @@
-export function TeamworkProvider(options) {
+/**
+ * Auth.js provider for Teamwork.com
+ * @param {object} options
+ * @param {string} options.clientId
+ * @param {string} options.clientSecret
+ */
+export default function Teamwork(options) {
   const issuer = 'https://www.teamwork.com/launchpad';
   return {
     id: 'teamwork',
