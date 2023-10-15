@@ -1,8 +1,8 @@
 import { Auth } from '@auth/core';
 import { TeamworkProvider } from './teamworkProvider';
 
+/** @return {import('@auth/core').AuthConfig} */
 async function getAuthConfig(context) {
-  /** @type {import('@auth/core').AuthConfig} */
   return {
     providers: [
       TeamworkProvider({
@@ -10,16 +10,18 @@ async function getAuthConfig(context) {
         clientSecret: context.env.TEAMWORK_SECRET,
       }),
     ],
-    prefix: '/auth',
     secret: context.env.AUTH_SECRET,
     trustHost: true,
     session: {
       strategy: 'jwt',
-      maxAge: 2 * 3600, //two hours
+      maxAge: 14 * 24 * 3600, //two weeks
     },
-    debug: true,
+    theme: {
+      brandColor: '#3C55BD',
+      logo: 'https://www.teamwork.com/images/logo.png',
+    },
     callbacks: {
-      async jwt({ token, profile, account }) {
+      async jwt({ token, account }) {
         if (account) {
           token.provider = account.provider;
         }
@@ -57,27 +59,14 @@ async function setSession(context) {
   }
   return context.next();
 }
-export const actions = [
-  'providers',
-  'session',
-  'csrf',
-  'signin',
-  'signout',
-  'callback',
-  'verify-request',
-  'error',
-];
 
 async function handleAuth(context) {
-  const { next, request } = context;
-  const url = new URL(request.url);
-  const authOptions = await getAuthConfig(context);
-  const { prefix = '/auth' } = authOptions;
-  const action = url.pathname.slice(prefix.length + 1).split('/')[0];
-  if (!actions.includes(action) || !url.pathname.startsWith(prefix + '/')) {
+  const url = new URL(context.request.url);
+  if (!url.pathname.startsWith('/auth/')) {
     return context.next();
   }
-  const resp = await Auth(request, authOptions);
+  const authOptions = await getAuthConfig(context);
+  const resp = await Auth(context.request, authOptions);
   return resp;
 }
 
